@@ -123,8 +123,15 @@
     <string name="settings_update_checking">Memeriksa GitHub…</string>
     <string name="settings_update_latest">RapiFy sudah versi terbaru!</string>
     <string name="settings_update_found">Versi baru ditemukan: v%1$s</string>
-    <string name="settings_about_desc">Open source, zero ads &amp; ultra lightweight</string>
+    <string name="settings_about_desc">Powered By Paduka Rafi • Open source, zero ads &amp; ultra lightweight</string>
     <string name="settings_total_users">Total pengguna: %1$s</string>
+    <string name="settings_copyright">© 2026 Paduka Rafi • RapiFy</string>
+    <string name="tab_report">Lapor</string>
+    <string name="report_title">Laporkan Bug</string>
+    <string name="report_desc">Nemu bug atau punya saran? Kirim langsung ke developer.</string>
+    <string name="report_btn_wa">Chat via WhatsApp</string>
+    <string name="report_btn_tg">Chat via Telegram</string>
+    <string name="report_wa_prefill">Halo, aku mau lapor bug di RapiFy v%1$s:\n</string>
     <string name="settings_contact_title">Lapor bug / kontak</string>
     <string name="settings_contact_wa">WhatsApp: 083854944887</string>
     <string name="settings_contact_tg">Telegram: @RafiCuy</string>

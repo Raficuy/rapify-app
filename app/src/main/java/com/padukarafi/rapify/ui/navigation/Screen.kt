@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.BugReport
 import androidx.compose.material.icons.outlined.QueueMusic
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.padukarafi.rapify.R
@@ -12,8 +13,9 @@ sealed class Screen(val route: String, @StringRes val titleRes: Int, val icon: I
     object Home : Screen("home", R.string.tab_home, Icons.Default.Home)
     object Search : Screen("search", R.string.tab_search, Icons.Default.Search)
     object Library : Screen("library", R.string.tab_library, Icons.Outlined.QueueMusic)
+    object Report : Screen("report", R.string.tab_report, Icons.Outlined.BugReport)
 
     companion object {
-        val bottomNavItems = listOf(Home, Search, Library)
+        val bottomNavItems = listOf(Home, Search, Library, Report)
     }
 }

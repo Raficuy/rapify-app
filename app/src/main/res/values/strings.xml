@@ -29,7 +29,7 @@
     <string name="greeting_afternoon">Good afternoon</string>
     <string name="greeting_evening">Good evening</string>
     <string name="greeting_night">Good night</string>
-    <string name="greeting_subtitle">Music that fits right now.</string>
+    <string name="greeting_subtitle">Powered By Paduka Rafi.</string>
 
     <!-- Home Screen -->
     <string name="home_play_again">Play again</string>
@@ -125,6 +125,13 @@
     <string name="settings_update_found">New version found: v%1$s</string>
     <string name="settings_about_desc">Powered By Paduka Rafi</string>
     <string name="settings_total_users">Total users: %1$s</string>
+    <string name="settings_copyright">© 2026 Paduka Rafi • RapiFy</string>
+    <string name="tab_report">Report</string>
+    <string name="report_title">Report a bug</string>
+    <string name="report_desc">Found a bug or have a suggestion? Send it straight to the developer.</string>
+    <string name="report_btn_wa">Chat on WhatsApp</string>
+    <string name="report_btn_tg">Message on Telegram</string>
+    <string name="report_wa_prefill">Hi, I want to report a bug in RapiFy v%1$s:\n</string>
     <string name="settings_contact_title">Bug report / contact</string>
     <string name="settings_contact_wa">WhatsApp: 083854944887</string>
     <string name="settings_contact_tg">Telegram: @RafiCuy</string>

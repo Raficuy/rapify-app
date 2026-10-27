@@ -630,6 +630,13 @@ fun SettingsDialog(
                                 .padding(horizontal = 4.dp, vertical = 2.dp)
                         )
                     }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = stringResource(R.string.settings_copyright),
+                        style = Typography.labelSmall,
+                        fontSize = 10.sp,
+                        color = colors.textMuted
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
