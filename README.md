@@ -1,15 +1,12 @@
 <div align="center">
 
-# 🖤 RapiFy (黒)
-### *Pure Sound. Zero Noise. Mastered for Android.*
+# *DISCLAIMER*: ini hanya sc rename dari kuro milik ayashi,link repo: https://github.com/ayashiiiyo/kuro
+### *RapiFy. Pure Sound. Zero Noise. Mastered for Android.*
 
 An ultra-lightweight, ad-free music streaming player built with **Jetpack Compose** & **AndroidX Media3**.
 Designed with an uncompromising monochrome aesthetic, studio-quality 1080p artwork, and zero telemetry.
 
 <br/>
-> *DISCLAIMER*: ini hanya sc rename dari kuro milik ayashi,link repo: https://github.com/ayashiiiyo/kuro
-
-
 > ### 🙏 Acknowledgements & Credits
 > RapiFy berdiri di atas dedikasi dan karya luar biasa dari komunitas open source:
 > - **[NewPipeExtractor](https://github.com/TeamNewPipe/NewPipeExtractor)** oleh **Team NewPipe** ([Christian Schabesberger / @theScrabi](https://github.com/theScrabi) & tim kontributor) — Mesin utama ekstraksi stream audio dan metadata tanpa API resmi dan bebas pelacak.
@@ -183,7 +180,7 @@ app/build/outputs/apk/release/app-release.apk
 
 ## 🛡️ Privasi & Keamanan
 
-- **Zero Data Collection:** RapiFy tidak memiliki server analitik, tidak mencatat riwayat pemutaran ke cloud, dan tidak menyematkan tracker pihak ketiga (Firebase, Google Analytics, dll).
+- **Minimal Data Collection:** RapiFy tidak mencatat riwayat pemutaran ke cloud dan tidak menyematkan tracker pihak ketiga (Firebase, Google Analytics, dll). Satu-satunya data yang dikirim adalah *ID acak anonim* (UUID, tidak terkait akun/identitas apa pun) maksimal sekali sehari, hanya untuk menghitung total pengguna. Kode server ada di folder [`backend/`](backend/).
 - **Safe Google Login:** Sesi login Google diproses melalui WebView lokal terisolasi di perangkat Anda. Kredensial dan cookie hanya disimpan dalam `SharedPreferences` privat perangkat.
 - **Open Source:** Seluruh kode sumber terbuka untuk diaudit secara publik.
 
@@ -201,5 +198,7 @@ Proyek ini dilisensikan di bawah lisensi **GNU General Public License v3.0 (GPL-
 
 Dibuat dengan rasa cinta terhadap kesederhanaan & musik yang jernih.  
 **RapiFy (黒) — Made for pure music lovers.**
+
+🐞 **Lapor bug / kontak:** WhatsApp [083854944887](https://wa.me/6283854944887) • Telegram [@RafiCuy](https://t.me/RafiCuy)
 
 </div>

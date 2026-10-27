@@ -124,6 +124,10 @@
     <string name="settings_update_latest">RapiFy is up to date!</string>
     <string name="settings_update_found">New version found: v%1$s</string>
     <string name="settings_about_desc">Powered By Paduka Rafi</string>
+    <string name="settings_total_users">Total users: %1$s</string>
+    <string name="settings_contact_title">Bug report / contact</string>
+    <string name="settings_contact_wa">WhatsApp: 083854944887</string>
+    <string name="settings_contact_tg">Telegram: @RafiCuy</string>
 
     <!-- Update Dialog -->
     <string name="update_available">Update Available</string>

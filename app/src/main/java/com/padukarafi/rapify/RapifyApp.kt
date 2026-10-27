@@ -25,6 +25,7 @@ class RapifyApp : Application(), ImageLoaderFactory {
         } catch (_: Exception) {}
         val downloader = RapifyDownloader.init(this)
         NewPipe.init(downloader)
+        com.padukarafi.rapify.data.stats.StatsManager.init(this)
     }
 
     override fun newImageLoader(): ImageLoader {

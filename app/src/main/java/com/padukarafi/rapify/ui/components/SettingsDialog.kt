@@ -70,6 +70,7 @@ fun SettingsDialog(
     val context = LocalContext.current
     val colors = RapifyAppTheme.colors
     val scope = rememberCoroutineScope()
+    val totalUsers by com.padukarafi.rapify.data.stats.StatsManager.totalUsers.collectAsState()
     val settingsManager = remember { SettingsManager.getInstance() }
     val currentTheme by settingsManager.themeMode.collectAsState()
     val currentLanguage by settingsManager.language.collectAsState()
@@ -563,6 +564,72 @@ fun SettingsDialog(
                         fontSize = 10.sp,
                         color = colors.textMuted
                     )
+                    totalUsers?.let { total ->
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(
+                            text = stringResource(
+                                R.string.settings_total_users,
+                                java.text.NumberFormat.getInstance().format(total)
+                            ),
+                            style = Typography.labelSmall,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colors.textSecondary
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = stringResource(R.string.settings_contact_title),
+                        style = Typography.labelSmall,
+                        fontSize = 10.sp,
+                        color = colors.textMuted
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.settings_contact_wa),
+                            style = Typography.labelSmall,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colors.accent,
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .clickable {
+                                    try {
+                                        context.startActivity(
+                                            android.content.Intent(
+                                                android.content.Intent.ACTION_VIEW,
+                                                android.net.Uri.parse("https://wa.me/6283854944887")
+                                            ).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                                        )
+                                    } catch (_: Exception) { }
+                                }
+                                .padding(horizontal = 4.dp, vertical = 2.dp)
+                        )
+                        Text(
+                            text = stringResource(R.string.settings_contact_tg),
+                            style = Typography.labelSmall,
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colors.accent,
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .clickable {
+                                    try {
+                                        context.startActivity(
+                                            android.content.Intent(
+                                                android.content.Intent.ACTION_VIEW,
+                                                android.net.Uri.parse("https://t.me/RafiCuy")
+                                            ).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                                        )
+                                    } catch (_: Exception) { }
+                                }
+                                .padding(horizontal = 4.dp, vertical = 2.dp)
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
