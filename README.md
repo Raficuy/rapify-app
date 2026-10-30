@@ -1,7 +1,7 @@
 <div align="center">
 
 # *DISCLAIMER*: ini hanya sc rename dari kuro milik ayashi,link repo: https://github.com/ayashiiiyo/kuro
-### *RapiFy. Pure Sound. Zero Noise. Mastered for Android.*
+### *RapiFy. Pure Sound. Zero Noise. Mastered for Android. No Ads*
 
 An ultra-lightweight, ad-free music streaming player built with **Jetpack Compose** & **AndroidX Media3**.
 Designed with an uncompromising monochrome aesthetic, studio-quality 1080p artwork, and zero telemetry.

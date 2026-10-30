@@ -1,8 +1,13 @@
 package com.padukarafi.rapify.ui.screens
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -28,7 +33,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -42,6 +49,8 @@ import com.padukarafi.rapify.ui.theme.Typography
 
 private const val CONTACT_WA_NUMBER = "6283854944887"
 private const val CONTACT_TELEGRAM = "RafiCuy"
+private const val CONTACT_WA_CHANNEL = "https://whatsapp.com/channel/0029Vb5h45DKWEKjMyUUbg1O"
+private const val DANA_NUMBER = "083854944887"
 
 @Composable
 fun ReportScreen() {
@@ -99,6 +108,48 @@ fun ReportScreen() {
             ReportButton(
                 label = stringResource(R.string.report_btn_tg),
                 onClick = { open("https://t.me/$CONTACT_TELEGRAM") }
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            ReportButton(
+                label = "Saluran WhatsApp", 
+                onClick = { open(CONTACT_WA_CHANNEL) }
+            )
+
+            Spacer(modifier = Modifier.height(36.dp))
+            Text(
+                text = stringResource(R.string.donate_title),
+                style = Typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = colors.textPrimary,
+                textAlign = TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(
+                text = stringResource(R.string.donate_desc),
+                style = Typography.bodySmall,
+                color = colors.textMuted,
+                textAlign = TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Image(
+                painter = painterResource(R.drawable.qris_donation),
+                contentDescription = stringResource(R.string.donate_qris_desc),
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(16.dp))
+                    .border(BorderStroke(1.dp, colors.border), RoundedCornerShape(16.dp))
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            ReportButton(
+                label = stringResource(R.string.donate_copy_dana, DANA_NUMBER),
+                onClick = {
+                    try {
+                        val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                        cm.setPrimaryClip(ClipData.newPlainText("DANA", DANA_NUMBER))
+                        Toast.makeText(context, R.string.donate_copied, Toast.LENGTH_SHORT).show()
+                    } catch (_: Exception) { }
+                }
             )
 
             Spacer(modifier = Modifier.height(32.dp))
