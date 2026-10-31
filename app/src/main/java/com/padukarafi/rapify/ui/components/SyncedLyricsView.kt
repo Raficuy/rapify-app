@@ -86,8 +86,7 @@ fun SyncedLyricsView(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .background(colors.card)
-            .border(1.dp, colors.border, RoundedCornerShape(20.dp))
+            .glass(RoundedCornerShape(20.dp), colors.isDark, tint = LocalCoverTint.current)
             .padding(16.dp)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {

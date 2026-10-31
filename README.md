@@ -1,6 +1,5 @@
 <div align="center">
 
-# *DISCLAIMER*: ini hanya sc rename dari kuro milik ayashi,link repo: https://github.com/ayashiiiyo/kuro
 ### *RapiFy. Pure Sound. Zero Noise. Mastered for Android. No Ads*
 
 An ultra-lightweight, ad-free music streaming player built with **Jetpack Compose** & **AndroidX Media3**.
@@ -8,6 +7,7 @@ Designed with an uncompromising monochrome aesthetic, studio-quality 1080p artwo
 
 <br/>
 > ### 🙏 Acknowledgements & Credits
+> - **[Kuro](https://github.com/ayashiiiyo/kuro)** oleh **ayashiiiyo** — basis kode awal RapiFy. Proyek ini diturunkan darinya dan dirilis ulang di bawah lisensi yang sama (GPL-3.0).
 > RapiFy berdiri di atas dedikasi dan karya luar biasa dari komunitas open source:
 > - **[NewPipeExtractor](https://github.com/TeamNewPipe/NewPipeExtractor)** oleh **Team NewPipe** ([Christian Schabesberger / @theScrabi](https://github.com/theScrabi) & tim kontributor) — Mesin utama ekstraksi stream audio dan metadata tanpa API resmi dan bebas pelacak.
 > - **[InnerTube](https://github.com/TeamNewPipe/NewPipe)** / InnerTube API Reverse Engineering — Arsitektur data YouTube & YouTube Music internal yang dirintis serta didokumentasikan oleh pengembang ekosistem open-source NewPipe dan komunitas sekitarnya.
@@ -47,6 +47,15 @@ Sebagian besar aplikasi pemutar musik modern dipenuhi iklan, rekomendasi algorit
 ---
 
 ## ✨ Fitur Utama
+
+### 🪟 0. Liquid Glass UI
+- Nav bar kaca melayang dengan indikator yang bergeser halus, mini player kaca, dan chip/kartu berbahan kaca.
+- Latar ambient dari artwork lagu yang sedang diputar, plus tint kaca yang mengikuti warna cover.
+- Tanpa blur real-time di atas list, jadi tetap ringan dan hemat baterai.
+
+### 🌙 0b. Timer Tidur & Antrean
+- **Timer tidur** (15–90 menit) dari menu `···` di pemutar. Tetap jalan walau aplikasi ditutup.
+- **Layar antrean:** lihat lagu berikutnya, ketuk untuk langsung memutar, naikkan ke urutan berikutnya, atau hapus dari antrean.
 
 ### 🎨 1. Desain Pemutar Penuh & Homescreen Widget Modern
 - **Full-Bleed Edge-to-Edge Artwork:** Album cover membentang anggun di bagian atas layar dengan gradien halus yang melebur ke latar belakang hitam pekat.

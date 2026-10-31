@@ -16,6 +16,6 @@ sealed class Screen(val route: String, @StringRes val titleRes: Int, val icon: I
     object Report : Screen("report", R.string.tab_report, Icons.Outlined.BugReport)
 
     companion object {
-        val bottomNavItems = listOf(Home, Search, Library, Report)
+        val bottomNavItems = listOf(Home, Search, Library)
     }
 }

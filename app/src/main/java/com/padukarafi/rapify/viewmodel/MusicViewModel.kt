@@ -732,6 +732,34 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         playTrack(playlistQueue[prevIndex])
     }
 
+    fun queueSnapshot(): List<Track> = synchronized(playlistQueue) { playlistQueue.toList() }
+
+    fun queueIndex(): Int = currentIndex
+
+    fun playFromQueue(trackId: String) {
+        val target = queueSnapshot().firstOrNull { it.id == trackId } ?: return
+        playTrack(target)
+    }
+
+    fun removeFromQueue(trackId: String) {
+        synchronized(playlistQueue) {
+            val i = playlistQueue.indexOfFirst { it.id == trackId }
+            if (i == -1 || i == currentIndex) return
+            playlistQueue.removeAt(i)
+            if (i < currentIndex) currentIndex--
+        }
+    }
+
+    fun playNextInQueue(trackId: String) {
+        synchronized(playlistQueue) {
+            val i = playlistQueue.indexOfFirst { it.id == trackId }
+            if (i == -1 || i == currentIndex) return
+            val moved = playlistQueue.removeAt(i)
+            if (i < currentIndex) currentIndex--
+            playlistQueue.add((currentIndex + 1).coerceIn(0, playlistQueue.size), moved)
+        }
+    }
+
     fun toggleShuffle() {
         _isShuffle.value = !_isShuffle.value
     }

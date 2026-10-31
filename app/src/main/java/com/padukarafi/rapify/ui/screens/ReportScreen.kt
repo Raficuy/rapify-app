@@ -1,5 +1,8 @@
 package com.padukarafi.rapify.ui.screens
 
+import com.padukarafi.rapify.ui.components.glass
+import com.padukarafi.rapify.ui.components.GlassLevel
+
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -190,8 +193,7 @@ private fun ReportButton(label: String, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .background(colors.card)
-            .border(BorderStroke(1.dp, colors.border), RoundedCornerShape(16.dp))
+            .glass(RoundedCornerShape(16.dp), colors.isDark)
             .clickable(onClick = onClick)
             .padding(vertical = 16.dp),
         contentAlignment = Alignment.Center

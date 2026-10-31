@@ -1,5 +1,8 @@
 package com.padukarafi.rapify.ui.screens
 
+import com.padukarafi.rapify.ui.components.glass
+import com.padukarafi.rapify.ui.components.GlassLevel
+
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.background
@@ -96,8 +99,7 @@ fun HomeScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(colors.background)
-            .padding(top = 16.dp)
+                        .padding(top = 16.dp)
     ) {
         Column(
             modifier = Modifier
@@ -146,8 +148,10 @@ fun HomeScreen(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(20.dp))
-                            .background(if (isSelected) colors.textPrimary else colors.card)
-                            .border(1.dp, if (isSelected) colors.textPrimary else colors.border, RoundedCornerShape(20.dp))
+                            .then(
+                                if (isSelected) Modifier.background(colors.textPrimary)
+                                else Modifier.glass(RoundedCornerShape(20.dp), colors.isDark, GlassLevel.Subtle)
+                            )
                             .clickable {
                                 selectedGenre = genre
                                 if (genre == "Semua") {
@@ -256,7 +260,7 @@ fun HomeScreen(
                                                 .weight(1f)
                                                 .height(62.dp)
                                                 .clip(RoundedCornerShape(9.dp))
-                                                .background(colors.card)
+                                                .glass(RoundedCornerShape(9.dp), colors.isDark, GlassLevel.Subtle)
                                                 .clickable { viewModel.playTrack(track, quickPicks) },
                                             verticalAlignment = Alignment.CenterVertically
                                         ) {

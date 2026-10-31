@@ -159,4 +159,16 @@
     <string name="update_permission_title">Izinkan pemasangan aplikasi</string>
     <string name="update_permission_text">Izinkan RapiFy memasang aplikasi dari sumber tidak dikenal, lalu ketuk notifikasi pembaruan lagi.</string>
     <string name="update_download_failed">Unduhan pembaruan gagal. Silakan coba lagi.</string>
+    <string name="settings_report">Lapor dan dukung</string>
+    <string name="settings_report_desc">Lapor bug, kontak, dan donasi</string>
+    <string name="sleep_timer_title">Timer tidur</string>
+    <string name="sleep_timer_off">Matikan timer</string>
+    <string name="sleep_timer_minutes">%1$d menit</string>
+    <string name="sleep_timer_active">Musik berhenti dalam %1$d menit</string>
+    <string name="player_queue">Antrean</string>
+    <string name="queue_now_playing">Sedang diputar</string>
+    <string name="queue_up_next">Berikutnya</string>
+    <string name="queue_empty">Antrean masih kosong.</string>
+    <string name="queue_play_next">Naikkan</string>
+    <string name="queue_remove">Hapus dari antrean</string>
 </resources>

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material.icons.outlined.GraphicEq
@@ -82,6 +84,7 @@ fun SettingsDialog(
     var isCheckingUpdate by remember { mutableStateOf(false) }
     var updateStatusMessage by remember { mutableStateOf<String?>(null) }
     var foundUpdateInfo by remember { mutableStateOf<UpdateInfo?>(null) }
+    var showReport by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
 
     LaunchedEffect(Unit) {
@@ -459,8 +462,7 @@ fun SettingsDialog(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(12.dp))
-                            .background(colors.card)
-                            .border(1.dp, colors.border, RoundedCornerShape(12.dp))
+                            .glass(RoundedCornerShape(12.dp), colors.isDark)
                             .clickable {
                                 scope.launch {
                                     val success = settingsManager.clearCacheAsync()
@@ -480,6 +482,38 @@ fun SettingsDialog(
                             color = colors.textPrimary
                         )
                     }
+                }
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // 4b. Report & support (dulunya tab sendiri di bottom bar)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(12.dp))
+                        .clickable { showReport = true }
+                        .padding(vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringResource(R.string.settings_report),
+                            style = Typography.bodyMedium,
+                            fontWeight = FontWeight.SemiBold,
+                            color = colors.textPrimary
+                        )
+                        Text(
+                            text = stringResource(R.string.settings_report_desc),
+                            style = Typography.bodySmall,
+                            color = colors.textMuted
+                        )
+                    }
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowRight,
+                        contentDescription = null,
+                        tint = colors.textMuted
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))
@@ -507,8 +541,7 @@ fun SettingsDialog(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(20.dp))
-                            .background(colors.card)
-                            .border(1.dp, colors.border, RoundedCornerShape(20.dp))
+                            .glass(RoundedCornerShape(20.dp), colors.isDark)
                             .clickable(enabled = !isCheckingUpdate) {
                                 scope.launch {
                                     isCheckingUpdate = true
@@ -640,6 +673,37 @@ fun SettingsDialog(
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
+            }
+        }
+    }
+
+    if (showReport) {
+        Dialog(
+            onDismissRequest = { showReport = false },
+            properties = DialogProperties(usePlatformDefaultWidth = false)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(colors.background)
+            ) {
+                com.padukarafi.rapify.ui.screens.ReportScreen()
+                IconButton(
+                    onClick = { showReport = false },
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(12.dp)
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(colors.card)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = stringResource(R.string.action_close),
+                        tint = colors.textPrimary,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
             }
         }
     }

@@ -120,8 +120,7 @@ fun AddToPlaylistDialog(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(12.dp))
-                    .background(colors.card)
-                    .border(1.dp, colors.border, RoundedCornerShape(12.dp))
+                    .glass(RoundedCornerShape(12.dp), colors.isDark)
                     .clickable { showCreateDialog = true }
                     .padding(horizontal = 16.dp, vertical = 14.dp),
                 verticalAlignment = Alignment.CenterVertically

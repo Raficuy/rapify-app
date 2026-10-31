@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -62,20 +64,9 @@ fun MiniPlayer(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(14.dp))
-            .background(colors.card)
-            .border(1.dp, colors.border, RoundedCornerShape(14.dp))
+            .glass(RoundedCornerShape(22.dp), colors.isDark, GlassLevel.Floating, LocalCoverTint.current)
             .clickable { onClick() }
     ) {
-        LinearProgressIndicator(
-            progress = { progress },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(2.dp),
-            color = colors.textPrimary,
-            trackColor = colors.border
-        )
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -96,7 +87,7 @@ fun MiniPlayer(
                         contentDescription = animatedTrack.title,
                         modifier = Modifier
                             .size(44.dp)
-                            .clip(RoundedCornerShape(8.dp)),
+                            .clip(RoundedCornerShape(10.dp)),
                         contentScale = ContentScale.Crop
                     )
                 }
@@ -155,6 +146,22 @@ fun MiniPlayer(
                     modifier = Modifier.size(24.dp)
                 )
             }
+        }
+
+        Box(
+            modifier = Modifier
+                .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
+                .fillMaxWidth()
+                .height(2.dp)
+                .clip(CircleShape)
+                .background(colors.textPrimary.copy(alpha = 0.14f))
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(progress.coerceIn(0f, 1f))
+                    .background(colors.textPrimary.copy(alpha = 0.85f))
+            )
         }
     }
 }

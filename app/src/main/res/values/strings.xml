@@ -159,4 +159,16 @@
     <string name="update_permission_title">Allow app installs</string>
     <string name="update_permission_text">Allow RapiFy to install unknown apps, then tap the update notification again.</string>
     <string name="update_download_failed">Update download failed. Please try again.</string>
+    <string name="settings_report">Report and support</string>
+    <string name="settings_report_desc">Bug reports, contact, and donations</string>
+    <string name="sleep_timer_title">Sleep timer</string>
+    <string name="sleep_timer_off">Turn off timer</string>
+    <string name="sleep_timer_minutes">%1$d minutes</string>
+    <string name="sleep_timer_active">Music pauses in %1$d min</string>
+    <string name="player_queue">Queue</string>
+    <string name="queue_now_playing">Now playing</string>
+    <string name="queue_up_next">Up next</string>
+    <string name="queue_empty">Nothing queued yet.</string>
+    <string name="queue_play_next">Move up</string>
+    <string name="queue_remove">Remove from queue</string>
 </resources>

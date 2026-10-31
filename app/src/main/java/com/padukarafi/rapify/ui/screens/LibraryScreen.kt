@@ -1,5 +1,8 @@
 package com.padukarafi.rapify.ui.screens
 
+import com.padukarafi.rapify.ui.components.glass
+import com.padukarafi.rapify.ui.components.GlassLevel
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -86,8 +89,7 @@ fun LibraryScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(colors.background)
-            .padding(top = 16.dp)
+                        .padding(top = 16.dp)
     ) {
         if (selectedPlaylist != null) {
             PlaylistDetailView(
@@ -124,8 +126,7 @@ fun LibraryScreen(
                     Row(
                         modifier = Modifier
                             .clip(RoundedCornerShape(16.dp))
-                            .background(colors.card)
-                            .border(1.dp, colors.border, RoundedCornerShape(16.dp))
+                            .glass(RoundedCornerShape(16.dp), colors.isDark)
                             .clickable { viewModel.syncLikedSongs() }
                             .padding(horizontal = 12.dp, vertical = 6.dp),
                         verticalAlignment = Alignment.CenterVertically
@@ -158,8 +159,10 @@ fun LibraryScreen(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(20.dp))
-                        .background(if (selectedTab == 0) colors.accent else colors.card)
-                        .border(1.dp, if (selectedTab == 0) colors.accent else colors.border, RoundedCornerShape(20.dp))
+                        .then(
+                            if (selectedTab == 0) Modifier.background(colors.accent)
+                            else Modifier.glass(RoundedCornerShape(20.dp), colors.isDark, GlassLevel.Subtle)
+                        )
                         .clickable { selectedTab = 0 }
                         .padding(horizontal = 16.dp, vertical = 8.dp),
                     contentAlignment = Alignment.Center
@@ -174,8 +177,10 @@ fun LibraryScreen(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(20.dp))
-                        .background(if (selectedTab == 1) colors.accent else colors.card)
-                        .border(1.dp, if (selectedTab == 1) colors.accent else colors.border, RoundedCornerShape(20.dp))
+                        .then(
+                            if (selectedTab == 1) Modifier.background(colors.accent)
+                            else Modifier.glass(RoundedCornerShape(20.dp), colors.isDark, GlassLevel.Subtle)
+                        )
                         .clickable { selectedTab = 1 }
                         .padding(horizontal = 16.dp, vertical = 8.dp),
                     contentAlignment = Alignment.Center
@@ -242,8 +247,7 @@ fun LibraryScreen(
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp, vertical = 4.dp)
                                 .clip(RoundedCornerShape(12.dp))
-                                .background(colors.card)
-                                .border(1.dp, colors.border, RoundedCornerShape(12.dp))
+                                .glass(RoundedCornerShape(12.dp), colors.isDark)
                                 .clickable { showCreateDialog = true }
                                 .padding(horizontal = 16.dp, vertical = 14.dp),
                             verticalAlignment = Alignment.CenterVertically
@@ -316,7 +320,7 @@ fun LibraryScreen(
                                     .fillMaxWidth()
                                     .padding(horizontal = 16.dp, vertical = 6.dp)
                                     .clip(RoundedCornerShape(12.dp))
-                                    .background(colors.card)
+                                    .glass(RoundedCornerShape(12.dp), colors.isDark, GlassLevel.Subtle)
                                     .clickable { selectedPlaylistId = playlist.id }
                                     .padding(12.dp),
                                 verticalAlignment = Alignment.CenterVertically

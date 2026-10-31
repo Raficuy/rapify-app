@@ -155,6 +155,7 @@ class PlaybackService : MediaSessionService() {
         }
 
         player = forwardingPlayer
+        SleepTimer.player = forwardingPlayer
 
         val openAppIntent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
@@ -266,6 +267,8 @@ class PlaybackService : MediaSessionService() {
             mediaSession = null
         }
         player = null
+        SleepTimer.cancel()
+        SleepTimer.player = null
         super.onDestroy()
     }
 }

@@ -68,7 +68,7 @@ fun TrackItem(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(if (isPlaying) colors.card else Color.Transparent)
+            .then(if (isPlaying) Modifier.glass(RoundedCornerShape(14.dp), colors.isDark, GlassLevel.Subtle, LocalCoverTint.current) else Modifier)
             .clickable { onClick() }
             .padding(horizontal = 14.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically

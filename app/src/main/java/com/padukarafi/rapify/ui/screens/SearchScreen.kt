@@ -1,5 +1,8 @@
 package com.padukarafi.rapify.ui.screens
 
+import com.padukarafi.rapify.ui.components.glass
+import com.padukarafi.rapify.ui.components.GlassLevel
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -102,8 +105,7 @@ fun SearchScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(colors.background)
-            .padding(top = 16.dp)
+                        .padding(top = 16.dp)
     ) {
         Column(modifier = Modifier.padding(horizontal = 20.dp)) {
             Text(
@@ -160,8 +162,8 @@ fun SearchScreen(
                     }
                 }),
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = colors.card,
-                    unfocusedContainerColor = colors.card,
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedTextColor = colors.textPrimary,
@@ -170,8 +172,7 @@ fun SearchScreen(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp))
-                    .border(1.dp, colors.border, RoundedCornerShape(16.dp))
+                    .glass(RoundedCornerShape(16.dp), colors.isDark)
             )
         }
 
@@ -283,15 +284,7 @@ fun SearchScreen(
                                 .fillMaxWidth()
                                 .height(96.dp)
                                 .clip(RoundedCornerShape(16.dp))
-                                .background(
-                                    Brush.linearGradient(
-                                        colors = listOf(
-                                            colors.card,
-                                            colors.card.copy(alpha = 0.75f)
-                                        )
-                                    )
-                                )
-                                .border(1.dp, colors.border, RoundedCornerShape(16.dp))
+                                .glass(RoundedCornerShape(16.dp), colors.isDark)
                                 .clickable {
                                     searchQuery = category.title
                                     focusManager.clearFocus()
@@ -352,8 +345,7 @@ fun SearchScreen(
                         modifier = Modifier
                             .size(64.dp)
                             .clip(CircleShape)
-                            .background(colors.card)
-                            .border(1.dp, colors.border, CircleShape),
+                            .glass(CircleShape, colors.isDark),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(

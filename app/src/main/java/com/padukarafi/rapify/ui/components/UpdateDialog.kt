@@ -71,8 +71,7 @@ fun UpdateDialog(
                         modifier = Modifier
                             .size(44.dp)
                             .clip(CircleShape)
-                            .background(colors.card)
-                            .border(1.dp, colors.border, CircleShape),
+                            .glass(CircleShape, colors.isDark),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
@@ -116,8 +115,7 @@ fun UpdateDialog(
                             .fillMaxWidth()
                             .height((130).dp)
                             .clip(RoundedCornerShape(14.dp))
-                            .background(colors.card)
-                            .border(1.dp, colors.border, RoundedCornerShape(14.dp))
+                            .glass(RoundedCornerShape(14.dp), colors.isDark)
                             .padding(12.dp)
                             .verticalScroll(scrollState)
                     ) {

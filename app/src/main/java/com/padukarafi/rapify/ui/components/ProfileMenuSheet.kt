@@ -94,8 +94,7 @@ fun ProfileMenuSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(16.dp))
-                    .background(colors.card)
-                    .border(1.dp, colors.border, RoundedCornerShape(16.dp))
+                    .glass(RoundedCornerShape(16.dp), colors.isDark)
                     .padding(16.dp)
             ) {
                 Row(
@@ -454,8 +453,7 @@ fun ListeningStatsDiagram(
                 modifier = Modifier
                     .weight(1f)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(colors.card)
-                    .border(1.dp, colors.border, RoundedCornerShape(12.dp))
+                    .glass(RoundedCornerShape(12.dp), colors.isDark)
                     .padding(12.dp)
             ) {
                 Text(
@@ -475,8 +473,7 @@ fun ListeningStatsDiagram(
                 modifier = Modifier
                     .weight(1f)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(colors.card)
-                    .border(1.dp, colors.border, RoundedCornerShape(12.dp))
+                    .glass(RoundedCornerShape(12.dp), colors.isDark)
                     .padding(12.dp)
             ) {
                 Text(
@@ -516,8 +513,7 @@ fun ListeningStatsDiagram(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(14.dp))
-                    .background(colors.card)
-                    .border(1.dp, colors.border, RoundedCornerShape(14.dp))
+                    .glass(RoundedCornerShape(14.dp), colors.isDark)
                     .padding(16.dp)
             ) {
                 Row(
