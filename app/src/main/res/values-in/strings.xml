@@ -176,7 +176,7 @@
     <string name="announce_update_fallback">Ketuk perbarui untuk mendapat versi terbaru.</string>
     <string name="announce_update_action">Perbarui sekarang</string>
     <string name="whatsnew_title">Baru di RapiFy v%1$s</string>
-    <string name="whatsnew_1">Tampilan liquid glass yang mengikuti warna cover</string>
+    <string name="whatsnew_1">Tampilan liquid glass yang mengikuti warna cover lagu</string>
     <string name="whatsnew_2">Timer tidur dan layar antrean</string>
     <string name="whatsnew_3">Pemutar lebih penuh dengan aksi cepat dan Berikutnya</string>
 </resources>
