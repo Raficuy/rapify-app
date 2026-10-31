@@ -172,4 +172,11 @@
     <string name="queue_play_next">Move up</string>
     <string name="queue_remove">Remove from queue</string>
     <string name="player_action_playlist">Playlist</string>
+    <string name="announce_update_title">RapiFy v%1$s is available</string>
+    <string name="announce_update_fallback">Tap update to get the latest version.</string>
+    <string name="announce_update_action">Update now</string>
+    <string name="whatsnew_title">New in RapiFy v%1$s</string>
+    <string name="whatsnew_1">Liquid glass look that follows your cover art</string>
+    <string name="whatsnew_2">Sleep timer and a queue screen</string>
+    <string name="whatsnew_3">Fuller player with quick actions and Up next</string>
 </resources>

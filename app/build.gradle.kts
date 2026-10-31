@@ -23,12 +23,27 @@ android {
         resourceConfigurations += listOf("en", "id")
     }
 
+    // Kunci rilis TETAP. Wajib sama di setiap versi, kalau tidak Android menolak update
+    // ("aplikasi tidak terpasang karena konflik paket") dan user harus uninstall dulu.
+    // Nilainya diisi lewat environment (GitHub Secrets), tidak pernah ditulis di repo.
+    val releaseKeystorePath: String? = System.getenv("RAPIFY_KEYSTORE_PATH")
+    signingConfigs {
+        if (releaseKeystorePath != null && File(releaseKeystorePath).exists()) {
+            create("release") {
+                storeFile = File(releaseKeystorePath)
+                storePassword = System.getenv("RAPIFY_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("RAPIFY_KEY_ALIAS")
+                keyPassword = System.getenv("RAPIFY_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            // Langsung menggunakan kunci debug bawaan tanpa perlu Keystore eksternal
-            signingConfig = signingConfigs.getByName("debug")
+            // Build lokal tanpa keystore tetap jalan (pakai kunci debug); CI wajib pakai kunci rilis.
+            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

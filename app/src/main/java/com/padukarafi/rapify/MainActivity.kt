@@ -17,6 +17,9 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.compose.ui.graphics.Color
 import com.padukarafi.rapify.ui.components.AmbientBackdrop
 import com.padukarafi.rapify.ui.components.GlassNavBar
@@ -44,9 +47,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import com.padukarafi.rapify.data.update.UpdateInfo
 import com.padukarafi.rapify.data.update.UpdateManager
-import com.padukarafi.rapify.ui.components.UpdateDialog
 import com.padukarafi.rapify.data.model.Track
 import com.padukarafi.rapify.ui.components.FullPlayerSheet
 import com.padukarafi.rapify.ui.components.MiniPlayer
@@ -120,16 +121,23 @@ fun MainAppScreen(viewModel: MusicViewModel) {
     val repeatMode by viewModel.repeatMode.collectAsState()
 
     val context = LocalContext.current
-    var availableUpdate by remember { mutableStateOf<UpdateInfo?>(null) }
 
-    LaunchedEffect(Unit) {
-        if (!UpdateManager.hasCheckedThisSession) {
-            UpdateManager.hasCheckedThisSession = true
-            val update = UpdateManager.getInstance(context).checkForUpdate(force = false)
-            if (update != null) {
-                availableUpdate = update
-            }
+    // Cek update setiap aplikasi dibuka / kembali ke layar (app musik bisa hidup berhari-hari).
+    // Hasilnya tampil sebagai papan pengumuman di Home, bukan pop-up.
+    val lifecycleOwner = androidx.compose.ui.platform.LocalLifecycleOwner.current
+    var startTick by remember { mutableStateOf(0) }
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_START) startTick++
         }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+
+    LaunchedEffect(startTick) {
+        if (startTick == 0) return@LaunchedEffect
+        UpdateManager.getInstance(context).checkForUpdate(force = false)
     }
 
     BackHandler(enabled = isExpanded) {
@@ -236,18 +244,6 @@ fun MainAppScreen(viewModel: MusicViewModel) {
             }
         }
 
-        if (availableUpdate != null) {
-            UpdateDialog(
-                updateInfo = availableUpdate!!,
-                onDownloadClick = {
-                    UpdateManager.getInstance(context).startDownloadAndInstall(availableUpdate!!)
-                    availableUpdate = null
-                },
-                onDismiss = {
-                    availableUpdate = null
-                }
-            )
-        }
     }
     }
 }

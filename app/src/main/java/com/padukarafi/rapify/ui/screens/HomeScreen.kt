@@ -96,6 +96,13 @@ fun HomeScreen(
 
     val colors = com.padukarafi.rapify.ui.theme.RapifyAppTheme.colors
 
+    val appContext = androidx.compose.ui.platform.LocalContext.current
+    val updateInfo by com.padukarafi.rapify.data.update.UpdateManager.available.collectAsState()
+    val dismissedVersion by com.padukarafi.rapify.data.update.UpdateManager.dismissedVersion.collectAsState()
+    var showWhatsNew by remember {
+        mutableStateOf(com.padukarafi.rapify.data.update.WhatsNew.shouldShow(appContext))
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -133,6 +140,52 @@ fun HomeScreen(
                 AccountTopButton(
                     account = currentAccount,
                     onClick = { showProfileMenu = true }
+                )
+            }
+
+            val pendingUpdate = updateInfo
+            if (pendingUpdate != null && pendingUpdate.versionName != dismissedVersion) {
+                val noteLines = pendingUpdate.releaseNotes.lines()
+                    .map { it.trim() }
+                    .filter { it.startsWith("-") }
+                    .map { it.removePrefix("-").replace("**", "").trim() }
+                    .filter { it.isNotBlank() }
+                    .take(3)
+                com.padukarafi.rapify.ui.components.AnnouncementBoard(
+                    title = androidx.compose.ui.res.stringResource(
+                        com.padukarafi.rapify.R.string.announce_update_title,
+                        pendingUpdate.versionName
+                    ),
+                    lines = noteLines.ifEmpty {
+                        listOf(androidx.compose.ui.res.stringResource(com.padukarafi.rapify.R.string.announce_update_fallback))
+                    },
+                    actionLabel = androidx.compose.ui.res.stringResource(com.padukarafi.rapify.R.string.announce_update_action),
+                    onAction = {
+                        com.padukarafi.rapify.data.update.UpdateManager.getInstance(appContext)
+                            .startDownloadAndInstall(pendingUpdate)
+                    },
+                    onDismiss = {
+                        com.padukarafi.rapify.data.update.UpdateManager.getInstance(appContext)
+                            .dismissBanner(pendingUpdate.versionName)
+                    },
+                    modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp)
+                )
+            } else if (showWhatsNew) {
+                com.padukarafi.rapify.ui.components.AnnouncementBoard(
+                    title = androidx.compose.ui.res.stringResource(
+                        com.padukarafi.rapify.R.string.whatsnew_title,
+                        com.padukarafi.rapify.BuildConfig.VERSION_NAME
+                    ),
+                    lines = listOf(
+                        androidx.compose.ui.res.stringResource(com.padukarafi.rapify.R.string.whatsnew_1),
+                        androidx.compose.ui.res.stringResource(com.padukarafi.rapify.R.string.whatsnew_2),
+                        androidx.compose.ui.res.stringResource(com.padukarafi.rapify.R.string.whatsnew_3)
+                    ),
+                    onDismiss = {
+                        com.padukarafi.rapify.data.update.WhatsNew.markSeen(appContext)
+                        showWhatsNew = false
+                    },
+                    modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp)
                 )
             }
 

@@ -20,6 +20,9 @@ import androidx.core.content.FileProvider
 import com.padukarafi.rapify.BuildConfig
 import com.padukarafi.rapify.R
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -45,9 +48,23 @@ class UpdateManager private constructor(private val context: Context) {
         private const val TAG = "RapifyUpdateManager"
         private const val PREFS_NAME = "rapify_update_prefs"
         private const val KEY_LAST_CHECK_TIME = "last_check_timestamp"
+        private const val KEY_PENDING_VERSION = "pending_update_version"
+        private const val KEY_PENDING_NOTES = "pending_update_notes"
+        private const val KEY_PENDING_URL = "pending_update_url"
+        private const val KEY_PENDING_FILE = "pending_update_file"
         private const val MIN_CHECK_INTERVAL_MS = 15 * 60 * 1000L // 15 minutes throttle
         private const val NOTIFICATION_CHANNEL_UPDATE = "rapify_app_update_channel"
         private const val NOTIFICATION_ID_UPDATE = 2002
+
+        private val _available = MutableStateFlow<UpdateInfo?>(null)
+
+        /** Update yang sudah diketahui (null kalau tidak ada). Dipakai papan pengumuman di Home. */
+        val available: StateFlow<UpdateInfo?> = _available.asStateFlow()
+
+        private val _dismissedVersion = MutableStateFlow<String?>(null)
+
+        /** Versi yang papannya sudah ditutup user pada sesi ini. */
+        val dismissedVersion: StateFlow<String?> = _dismissedVersion.asStateFlow()
 
         @Volatile
         private var instance: UpdateManager? = null
@@ -67,14 +84,24 @@ class UpdateManager private constructor(private val context: Context) {
      * Checks GitHub API for newer releases.
      * @param force If true, bypasses throttle check (used for manual check from Settings).
      */
-    suspend fun checkForUpdate(force: Boolean = false): UpdateInfo? = withContext(Dispatchers.IO) {
+    suspend fun checkForUpdate(force: Boolean = false): UpdateInfo? {
+        val info = fetchUpdate(force)
+        _available.value = info
+        return info
+    }
+
+    fun dismissBanner(version: String) {
+        _dismissedVersion.value = version
+    }
+
+    private suspend fun fetchUpdate(force: Boolean): UpdateInfo? = withContext(Dispatchers.IO) {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val lastCheck = prefs.getLong(KEY_LAST_CHECK_TIME, 0L)
         val now = System.currentTimeMillis()
 
         if (!force && (now - lastCheck < MIN_CHECK_INTERVAL_MS)) {
-            Log.d(TAG, "Update check throttled. Skipping.")
-            return@withContext null
+            Log.d(TAG, "Update check throttled. Returning pending update (if any).")
+            return@withContext loadPending()
         }
 
         try {
@@ -89,7 +116,7 @@ class UpdateManager private constructor(private val context: Context) {
             if (!response.isSuccessful) {
                 Log.w(TAG, "GitHub API returned ${response.code}")
                 response.close()
-                return@withContext null
+                return@withContext loadPending()
             }
 
             // ResponseBody.string() closes the source; close the response too so a
@@ -136,18 +163,59 @@ class UpdateManager private constructor(private val context: Context) {
                 }
 
                 if (downloadUrl != null && fileName != null) {
-                    return@withContext UpdateInfo(
+                    val info = UpdateInfo(
                         versionName = tagName,
                         releaseNotes = cleanReleaseNotes(releaseNotes),
                         downloadUrl = downloadUrl,
                         apkFileName = fileName
                     )
+                    savePending(info)
+                    return@withContext info
                 }
+            } else {
+                clearPending()
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error checking for update: ${e.message}")
         }
-        null
+        // Gagal jaringan / tidak ada versi baru: tetap kembalikan update yang sudah diketahui
+        // (null kalau sudah tidak relevan), supaya pop-up tidak hilang karena throttle atau sinyal jelek.
+        loadPending()
+    }
+
+    private fun savePending(info: UpdateInfo) {
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit()
+            .putString(KEY_PENDING_VERSION, info.versionName)
+            .putString(KEY_PENDING_NOTES, info.releaseNotes)
+            .putString(KEY_PENDING_URL, info.downloadUrl)
+            .putString(KEY_PENDING_FILE, info.apkFileName)
+            .apply()
+    }
+
+    private fun clearPending() {
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit()
+            .remove(KEY_PENDING_VERSION)
+            .remove(KEY_PENDING_NOTES)
+            .remove(KEY_PENDING_URL)
+            .remove(KEY_PENDING_FILE)
+            .apply()
+    }
+
+    private fun loadPending(): UpdateInfo? {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val version = prefs.getString(KEY_PENDING_VERSION, null) ?: return null
+        if (!isNewerVersion(BuildConfig.VERSION_NAME, version)) {
+            clearPending()
+            return null
+        }
+        val url = prefs.getString(KEY_PENDING_URL, null) ?: return null
+        val file = prefs.getString(KEY_PENDING_FILE, null) ?: return null
+        return UpdateInfo(
+            versionName = version,
+            releaseNotes = prefs.getString(KEY_PENDING_NOTES, "") ?: "",
+            downloadUrl = url,
+            apkFileName = file
+        )
     }
 
     private fun cleanReleaseNotes(raw: String): String {

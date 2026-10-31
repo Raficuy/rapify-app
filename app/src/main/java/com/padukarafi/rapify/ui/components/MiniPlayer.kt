@@ -64,7 +64,7 @@ fun MiniPlayer(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .glass(RoundedCornerShape(22.dp), colors.isDark, GlassLevel.Floating, LocalCoverTint.current)
+            .glass(RoundedCornerShape(22.dp), colors.isDark, GlassLevel.Floating, LocalCoverTint.current, frost = 0.93f)
             .clickable { onClick() }
     ) {
         Row(

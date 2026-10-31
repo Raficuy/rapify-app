@@ -65,7 +65,9 @@ fun Modifier.glass(
     shape: Shape,
     isDark: Boolean,
     level: GlassLevel = GlassLevel.Regular,
-    tint: Color = Color.White
+    tint: Color = Color.White,
+    /** 0..1: lapisan dasar gelap/terang yang meredam konten di belakang (untuk elemen yang menimpa list). */
+    frost: Float = 0f
 ): Modifier = this
     .clip(shape)
     .drawWithCache {
@@ -137,7 +139,12 @@ fun Modifier.glass(
         // Digambar 2x lebih tebal karena separuhnya terpotong clip -> terlihat 0.75dp.
         val rimStroke = Stroke(width = 1.5.dp.toPx())
 
+        val frostColor = if (isDark) lerp(Color(0xFF0B0B0B), tint, 0.16f) else lerp(Color(0xFFF7F7F8), tint, 0.10f)
+
         onDrawBehind {
+            if (frost > 0f) {
+                drawOutline(outline, color = frostColor.copy(alpha = frost.coerceIn(0f, 1f)))
+            }
             drawOutline(outline, brush = fillBrush)
             if (level != GlassLevel.Subtle) {
                 drawOutline(outline, brush = sheenBrush)
