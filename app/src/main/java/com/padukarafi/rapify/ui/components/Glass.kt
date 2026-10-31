@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -156,7 +157,8 @@ fun Modifier.glass(
 fun AmbientBackdrop(
     imageUrl: String?,
     modifier: Modifier = Modifier,
-    intensity: Float = 0.50f
+    intensity: Float = 0.50f,
+    fadeToBackground: Boolean = true
 ) {
     val colors = RapifyAppTheme.colors
     val context = LocalContext.current
@@ -197,18 +199,44 @@ fun AmbientBackdrop(
             )
         }
 
-        // Glow memudar ke warna latar di bagian bawah -> nav bar duduk di atas hitam bersih.
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        0f to Color.Transparent,
-                        0.45f to colors.background.copy(alpha = 0.55f),
-                        1f to colors.background
+        if (fadeToBackground) {
+            // Glow memudar ke warna latar di bagian bawah -> nav bar duduk di atas hitam bersih.
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            0f to Color.Transparent,
+                            0.45f to colors.background.copy(alpha = 0.55f),
+                            1f to colors.background
+                        )
                     )
-                )
-        )
+            )
+        } else {
+            // Mode pemutar: glow tetap hidup sampai bawah, ditambah cahaya warna cover dari dasar.
+            val tint = LocalCoverTint.current
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            0f to Color.Transparent,
+                            1f to Color.Black.copy(alpha = if (colors.isDark) 0.45f else 0f)
+                        )
+                    )
+                    .drawBehind {
+                        if (colors.isDark) {
+                            drawRect(
+                                brush = Brush.radialGradient(
+                                    colors = listOf(tint.copy(alpha = 0.26f), Color.Transparent),
+                                    center = Offset(size.width / 2f, size.height),
+                                    radius = size.width * 1.1f
+                                )
+                            )
+                        }
+                    }
+            )
+        }
     }
 }
 

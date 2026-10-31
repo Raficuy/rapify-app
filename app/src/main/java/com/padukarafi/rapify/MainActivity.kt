@@ -53,6 +53,7 @@ import com.padukarafi.rapify.ui.components.MiniPlayer
 import com.padukarafi.rapify.ui.navigation.Screen
 import com.padukarafi.rapify.ui.screens.HomeScreen
 import com.padukarafi.rapify.ui.screens.LibraryScreen
+import com.padukarafi.rapify.ui.screens.ReportScreen
 import com.padukarafi.rapify.ui.screens.SearchScreen
 import com.padukarafi.rapify.ui.theme.DarkBorder
 import com.padukarafi.rapify.ui.theme.DarkCard
@@ -185,6 +186,9 @@ fun MainAppScreen(viewModel: MusicViewModel) {
                     }
                     composable(Screen.Library.route) {
                         LibraryScreen(viewModel = viewModel)
+                    }
+                    composable(Screen.Report.route) {
+                        ReportScreen()
                     }
                 }
 

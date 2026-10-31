@@ -171,4 +171,5 @@
     <string name="queue_empty">Nothing queued yet.</string>
     <string name="queue_play_next">Move up</string>
     <string name="queue_remove">Remove from queue</string>
+    <string name="player_action_playlist">Playlist</string>
 </resources>

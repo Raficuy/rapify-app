@@ -84,7 +84,6 @@ fun SettingsDialog(
     var isCheckingUpdate by remember { mutableStateOf(false) }
     var updateStatusMessage by remember { mutableStateOf<String?>(null) }
     var foundUpdateInfo by remember { mutableStateOf<UpdateInfo?>(null) }
-    var showReport by remember { mutableStateOf(false) }
     val scrollState = rememberScrollState()
 
     LaunchedEffect(Unit) {
@@ -486,38 +485,6 @@ fun SettingsDialog(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // 4b. Report & support (dulunya tab sendiri di bottom bar)
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(12.dp))
-                        .clickable { showReport = true }
-                        .padding(vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = stringResource(R.string.settings_report),
-                            style = Typography.bodyMedium,
-                            fontWeight = FontWeight.SemiBold,
-                            color = colors.textPrimary
-                        )
-                        Text(
-                            text = stringResource(R.string.settings_report_desc),
-                            style = Typography.bodySmall,
-                            color = colors.textMuted
-                        )
-                    }
-                    Icon(
-                        imageVector = Icons.Default.KeyboardArrowRight,
-                        contentDescription = null,
-                        tint = colors.textMuted
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(24.dp))
-
                 // 5. Check for Updates
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -673,37 +640,6 @@ fun SettingsDialog(
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
-            }
-        }
-    }
-
-    if (showReport) {
-        Dialog(
-            onDismissRequest = { showReport = false },
-            properties = DialogProperties(usePlatformDefaultWidth = false)
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(colors.background)
-            ) {
-                com.padukarafi.rapify.ui.screens.ReportScreen()
-                IconButton(
-                    onClick = { showReport = false },
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(12.dp)
-                        .size(40.dp)
-                        .clip(CircleShape)
-                        .background(colors.card)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = stringResource(R.string.action_close),
-                        tint = colors.textPrimary,
-                        modifier = Modifier.size(20.dp)
-                    )
-                }
             }
         }
     }

@@ -64,7 +64,8 @@ jobs:
           - Ambient background and glass tint now follow the cover art of the current track (dark mode).
           - Sleep timer (15-90 min) from the player menu. Runs in the playback service, so it keeps working after the app is closed.
           - Queue screen: see what's next, tap to play, move a track up, or remove it.
-          - Report & support moved to Settings; bottom bar is now Home, Search, Library.
+          - Player no longer feels empty: quick actions (Queue, Sleep timer, Playlist), an "Up next" card, taller lyrics and an ambient glow that reaches the bottom.
+          - Updated QRIS donation code.
           - Published signed release and debug APKs.
           EOF
           

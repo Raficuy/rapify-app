@@ -264,3 +264,91 @@ fun SleepTimerDialog(onDismiss: () -> Unit) {
         }
     )
 }
+
+/** Tombol aksi cepat berbahan kaca di bawah kontrol pemutar. */
+@Composable
+fun PlayerQuickAction(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    label: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val colors = RapifyAppTheme.colors
+    Row(
+        modifier = modifier
+            .glass(RoundedCornerShape(16.dp), colors.isDark, tint = LocalCoverTint.current)
+            .clickable(onClick = onClick)
+            .padding(vertical = 13.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = colors.textPrimary,
+            modifier = Modifier.size(18.dp)
+        )
+        Spacer(modifier = Modifier.width(6.dp))
+        Text(
+            text = label,
+            style = Typography.labelMedium,
+            fontWeight = FontWeight.SemiBold,
+            color = colors.textPrimary,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
+}
+
+/** Kartu "Berikutnya": pratinjau lagu selanjutnya, ketuk untuk membuka antrean. */
+@Composable
+fun PlayerUpNextCard(
+    track: Track,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val colors = RapifyAppTheme.colors
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .glass(RoundedCornerShape(20.dp), colors.isDark, tint = LocalCoverTint.current)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 14.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        AsyncImage(
+            model = track.thumbnailUrlForDisplay(192),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.size(46.dp).clip(RoundedCornerShape(10.dp))
+        )
+        Spacer(modifier = Modifier.width(12.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = stringResource(R.string.queue_up_next),
+                style = Typography.labelSmall,
+                color = colors.textMuted
+            )
+            Text(
+                text = track.title,
+                style = Typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = colors.textPrimary,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = track.artist,
+                style = Typography.bodySmall,
+                color = colors.textMuted,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
+        Icon(
+            imageVector = Icons.Default.KeyboardArrowUp,
+            contentDescription = null,
+            tint = colors.textMuted
+        )
+    }
+}

@@ -56,6 +56,7 @@ Sebagian besar aplikasi pemutar musik modern dipenuhi iklan, rekomendasi algorit
 ### 🌙 0b. Timer Tidur & Antrean
 - **Timer tidur** (15–90 menit) dari menu `···` di pemutar. Tetap jalan walau aplikasi ditutup.
 - **Layar antrean:** lihat lagu berikutnya, ketuk untuk langsung memutar, naikkan ke urutan berikutnya, atau hapus dari antrean.
+- **Pemutar lebih penuh:** tombol aksi cepat (Antrean, Timer tidur, Playlist) dan kartu "Berikutnya" di bawah kontrol.
 
 ### 🎨 1. Desain Pemutar Penuh & Homescreen Widget Modern
 - **Full-Bleed Edge-to-Edge Artwork:** Album cover membentang anggun di bagian atas layar dengan gradien halus yang melebur ke latar belakang hitam pekat.

@@ -38,6 +38,7 @@ import androidx.compose.material.icons.outlined.BluetoothAudio
 import androidx.compose.material.icons.outlined.Bedtime
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Headphones
+import androidx.compose.material.icons.outlined.LibraryAdd
 import androidx.compose.material.icons.outlined.QueueMusic
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.outlined.Tune
@@ -124,6 +125,7 @@ fun FullPlayerSheet(
         AmbientBackdrop(
             imageUrl = track.thumbnailUrlForDisplay(192),
             intensity = 0.6f,
+            fadeToBackground = false,
             modifier = Modifier.fillMaxSize()
         )
         Column(
@@ -518,13 +520,39 @@ fun FullPlayerSheet(
 
                 }
 
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    PlayerQuickAction(
+                        icon = Icons.Outlined.QueueMusic,
+                        label = stringResource(R.string.player_queue),
+                        onClick = { showQueue = true },
+                        modifier = Modifier.weight(1f)
+                    )
+                    PlayerQuickAction(
+                        icon = Icons.Outlined.Bedtime,
+                        label = stringResource(R.string.sleep_timer_title),
+                        onClick = { showSleepTimer = true },
+                        modifier = Modifier.weight(1f)
+                    )
+                    PlayerQuickAction(
+                        icon = Icons.Outlined.LibraryAdd,
+                        label = stringResource(R.string.player_action_playlist),
+                        onClick = { showAddToPlaylist = true },
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(12.dp))
 
                 val hasLyrics = currentLyrics != null && currentLyrics!!.lines.isNotEmpty() &&
                         currentLyrics!!.lines.none { it.text.trim().equals("null", ignoreCase = true) }
 
                 if (hasLyrics) {
-                    val lyricsHeight = if (isLyricsExpanded) 380.dp else 160.dp
+                    val lyricsHeight = if (isLyricsExpanded) 380.dp else 200.dp
                     SyncedLyricsView(
                         lyricsData = currentLyrics,
                         isLoading = isLoadingLyrics,
@@ -543,10 +571,19 @@ fun FullPlayerSheet(
                             .fillMaxWidth()
                             .height(lyricsHeight)
                     )
-                    Spacer(modifier = Modifier.height(36.dp))
-                } else {
-                    Spacer(modifier = Modifier.height(36.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
                 }
+
+                val nextTrack = remember(track.id) {
+                    viewModel.queueSnapshot().getOrNull(viewModel.queueIndex() + 1)
+                }
+                if (nextTrack != null) {
+                    PlayerUpNextCard(
+                        track = nextTrack,
+                        onClick = { showQueue = true }
+                    )
+                }
+                Spacer(modifier = Modifier.height(36.dp))
             }
         }
     }
