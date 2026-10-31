@@ -58,14 +58,13 @@ jobs:
           VERSION_NAME: ${{ steps.apk.outputs.version }}
         run: |
           cat > RELEASE_NOTES.md <<'EOF'
-          ## RapiFy v3.5.1 — Widget Playback Fix & Flexible Resizing
+          ## RapiFy v3.6.0 — Liquid Glass UI, Sleep Timer & Queue
 
-          - Fixed widget taps stopping playback: one single command path (MediaController) and play/pause now follows playWhenReady instead of isPlaying.
-          - Removed the duplicate next/previous dispatch that skipped two tracks per tap.
-          - Hardened the widget receiver: controller failures can no longer crash it or leave an ANR, and playback resumes after the service was stopped.
-          - Added full flexible widget resizing (minResizeWidth/minResizeHeight/maxResizeWidth/maxResizeHeight) for both Compact and Square widgets.
-          - Updater now verifies the DownloadManager status, stores the APK in app-private storage, handles the "install unknown apps" permission, and uses localized notifications.
-          - Fixed app language not applying on Android 12 and below, and localized the remaining widget/settings text.
+          - Liquid Glass UI: floating glass nav bar with a sliding indicator, glass mini player, chips, cards and search field.
+          - Ambient background and glass tint now follow the cover art of the current track (dark mode).
+          - Sleep timer (15-90 min) from the player menu. Runs in the playback service, so it keeps working after the app is closed.
+          - Queue screen: see what's next, tap to play, move a track up, or remove it.
+          - Report & support moved to Settings; bottom bar is now Home, Search, Library.
           - Published signed release and debug APKs.
           EOF
           
@@ -75,7 +74,7 @@ jobs:
           gh release create "$RELEASE_TAG" \
             "${{ steps.apk.outputs.release_path }}" \
             "${{ steps.apk.outputs.debug_path }}" \
-            --title "RapiFy $RELEASE_TAG (Widget Playback Fix & Flexible Resizing)" \
+            --title "RapiFy $RELEASE_TAG (Liquid Glass UI, Sleep Timer & Queue)" \
             --notes-file RELEASE_NOTES.md \
             --latest
 
