@@ -29,7 +29,7 @@
     <string name="greeting_afternoon">Good afternoon</string>
     <string name="greeting_evening">Good evening</string>
     <string name="greeting_night">Good night</string>
-    <string name="greeting_subtitle">Music that fits right now.</string>
+    <string name="greeting_subtitle">Powered By Paduka Rafi.</string>
 
     <!-- Home Screen -->
     <string name="home_play_again">Play again</string>
